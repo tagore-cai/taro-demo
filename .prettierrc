@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "printWidth": 150,
+  "semi": true,
+  "useTabs": false,
+  "jsxSingleQuote": true,
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": { "parser": "json" }
+    }
+  ]
+}

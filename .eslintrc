@@ -6,7 +6,10 @@
     "class-methods-use-this": "off",
     "prefer-rest-params": "off",
     "arrow-body-style": "warn",
-    "taro/custom-component-children": "off"
+    "taro/custom-component-children": "off",
+    "space-before-function-paren": "off",
+    "semi": "off",
+    "import/prefer-default-export": "off"
   },
   "parser": "babel-eslint"
 }
