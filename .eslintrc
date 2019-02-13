@@ -1,5 +1,5 @@
 {
-  "extends": ["o2team", "taro"],
+  "extends": ["o2team","taro"],
   "rules": {
     "no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
@@ -11,5 +11,6 @@
     "semi": "off",
     "import/prefer-default-export": "off"
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "plugins": ["typescript"]
 }
