@@ -1,74 +1,91 @@
-import Taro from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
-import logoImg from '../../assets/images/logo_taro.png'
-import './index.scss'
+import Taro from '@tarojs/taro';
+import { View, Image } from '@tarojs/components';
+import logoImg from '../../assets/images/logo_taro.png';
+import './index.scss';
+
+import { getMenuTree } from '../../api/base';
 
 export default class Index extends Taro.Component {
   config = {
     navigationBarTitleText: 'Taro UI'
-  }
+  };
 
-  constructor () {
-    super(...arguments)
+  constructor() {
+    super(...arguments);
 
     this.state = {
       list: [
         {
           id: 'Basic',
           title: '基础',
-          content: '按钮组件',
+          content: '按钮组件'
         },
         {
           id: 'View',
           title: '视图',
-          content: '通告栏等8个组件',
+          content: '通告栏等8个组件'
         },
         {
           id: 'Feedback',
           title: '操作反馈',
-          content: '对话框等7个组件',
+          content: '对话框等7个组件'
         },
         {
           id: 'Data-entry',
           title: '数据录入',
-          content: '输入框等13个组件',
+          content: '输入框等13个组件'
         },
         {
           id: 'Layout',
           title: '布局',
-          content: '列表等6个组件',
+          content: '列表等6个组件'
         },
         {
           id: 'Navigation',
           title: '导航',
-          content: '标签栏等7个组件',
-        }, {
+          content: '标签栏等7个组件'
+        },
+        {
           id: 'Advanced',
           title: '高阶',
-          content: '日历组件',
+          content: '日历组件'
         }
       ]
-    }
+    };
   }
 
-  onShareAppMessage () {
+  onShareAppMessage() {
     return {
       title: 'Taro UI',
       path: '/pages/index/index',
       imageUrl: 'http://storage.360buyimg.com/mtd/home/share1535013100318.jpg'
-    }
+    };
   }
 
   gotoPanel = e => {
-    const { id } = e.currentTarget.dataset
+    const { id } = e.currentTarget.dataset;
     Taro.navigateTo({
       // url: `/pages/panel/index?id=${id.toLowerCase()}`
       url: `/pages/${id.toLowerCase()}/index`
-    })
+    });
+  };
+
+  componentDidMount() {
+    getMenuTree({})
+      .then(() => {
+
+      })
+      .catch(() => {
+        Taro.showToast({
+          title: '请求失败',
+          icon: 'fail',
+          duration: 20000
+        });
+      });
   }
 
-  render () {
-    const { list } = this.state
+  render() {
+    const { list } = this.state;
 
     return (
       <View className='page page-index'>
@@ -92,6 +109,6 @@ export default class Index extends Taro.Component {
           ))}
         </View>
       </View>
-    )
+    );
   }
 }

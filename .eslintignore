@@ -8,3 +8,4 @@ yarn-offline/
 docs/
 jest.config.js
 __mock__/
+/config

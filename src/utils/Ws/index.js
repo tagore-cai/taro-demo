@@ -44,7 +44,6 @@ export default class Ws {
 
     // Hook up interceptors middleware
     const chain = [Taro.request, undefined];
-    console.log(config);
 
     let promise = Promise.resolve(config);
     this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {

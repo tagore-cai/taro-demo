@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro';
 import Ws from './Ws';
 
 const service = new Ws({
@@ -8,10 +9,9 @@ const service = new Ws({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    config.url = /^(https?:|\/api)/.test(config.url) || config.url;
     config.header = {
       'Content-Type': 'application/json;charset=UTF-8',
-      Accept: 'application/json, text/plain, */*'
+      'accessToken': Taro.getStorageSync('accessToken')
     };
     return config;
   },
@@ -25,7 +25,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    if (res.code !== 0) {
+    if (+res.code !== 0) {
       return Promise.reject(res);
     }
     return res;
