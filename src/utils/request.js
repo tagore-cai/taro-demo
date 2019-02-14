@@ -11,13 +11,13 @@ service.interceptors.request.use(
   config => {
     config.header = {
       'Content-Type': 'application/json;charset=UTF-8',
-      'accessToken': Taro.getStorageSync('accessToken')
+      accessToken: Taro.getStorageSync('token')
     };
     return config;
   },
   error => {
     console.log(error);
-    Promise.reject(error);
+    // Promise.reject(error);
   }
 );
 
@@ -26,12 +26,21 @@ service.interceptors.response.use(
   response => {
     const res = response.data;
     if (+res.code !== 0) {
-      return Promise.reject(res);
+      Taro.showToast({
+        title: `${res.message}`,
+        icon: 'none',
+        mask: true
+      });
     }
-    return res;
+    return res.data;
   },
   error => {
-    return Promise.reject(error);
+    Taro.showToast({
+      title: `网络请求错误`,
+      icon: 'none',
+      mask: true
+    });
+    return error;
   }
 );
 

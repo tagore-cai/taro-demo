@@ -1,12 +1,13 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Input } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import { AtInput } from 'taro-ui';
+import { ComponentClass } from 'react';
+import Taro, { Component, Config } from '@tarojs/taro';
+import { View } from '@tarojs/components';
+import { Dispatch } from 'redux';
+import { connect } from '@tarojs/redux';
 
-import { add, minus, asyncAdd } from '../../actions/counter'
+import Login from '../login';
+import Home from '../home';
 
-import './index.scss'
+import './index.scss';
 
 // #region 书写注意
 //
@@ -19,83 +20,49 @@ import './index.scss'
 // #endregion
 
 type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
+  token: string;
+  dispatch: Dispatch;
+};
 
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
+type PageOwnProps = {};
 
-type PageOwnProps = {}
+type PageState = {};
 
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
+type IProps = PageStateProps & PageOwnProps;
 
 interface Index {
   props: IProps;
 }
 
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
+@connect(({ user }) => ({
+  ...user
 }))
 class Index extends Component {
-
-
-    /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
-    config: Config = {
+  config: Config = {
     navigationBarTitleText: '首页'
+  };
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(this.props, nextProps);
+  // }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menus/getMenuTree'
+    });
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
+  componentWillUnmount() {}
 
-  componentWillUnmount () { }
+  componentDidShow() {}
 
-  componentDidShow () { }
+  componentDidHide() {}
 
-  componentDidHide () { }
-
-  render () {
-    return (
-      <View className='index'>
-        <Input name='acc' title='用户名' type='text' placeholder='请输入用户名' />
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View><Text>我{this.props.counter.num}</Text></View>
-        <View><Text>Hello, World</Text></View>
-      </View>
-    )
+  render() {
+    const { token } = this.props;
+    return <View className='index'>{token ? <Home /> : <Login />}</View>;
   }
 }
 
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-
-export default Index as ComponentClass<PageOwnProps, PageState>
+export default Index as ComponentClass<PageOwnProps, PageState>;

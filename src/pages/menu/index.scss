@@ -1,41 +1,23 @@
-@import "../../assets/css/theme.scss";
+@import '../../assets/css/theme.scss';
 
 .page {
   position: relative;
-  background-color: #FDFDFD;
+  background-color: #fdfdfd;
 
-  view,
   div {
     box-sizing: border-box;
   }
 }
 
 .page-index {
-  padding: 60px 0 30px;
-
-  .logo {
-    margin: 0 auto;
-    margin-top: 60px;
-    font-size: 0;
-    text-align: center;
-
-    .img {
-      width: 264px;
-      height: 180px;
-    }
-  }
-
-  .page-title {
-    margin-top: 24px;
-    color: #474747;
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
+  .module-container {
+    flex: 1;
   }
 
   .module-list {
+    padding: 30px 40px;
     display: flex;
-    margin: 72px 40px 50px;
+    // margin: 72px 40px 50px;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -72,7 +54,7 @@
 
       &-content {
         margin-top: 12px;
-        color: #A09EAE;
+        color: #a09eae;
         font-size: 24px;
         line-height: 1.5;
       }
@@ -120,7 +102,7 @@
     align-items: center;
 
     &::before {
-      content: " ";
+      content: ' ';
       position: absolute;
       left: 0;
       top: 0;

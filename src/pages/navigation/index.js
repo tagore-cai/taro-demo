@@ -1,67 +1,63 @@
-import Taro,{request} from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import {
-  AtNavBar,
-  AtTabBar,
-  AtTabs,
-  AtTabsPane,
-  AtSegmentedControl,
-  AtPagination,
-  AtDrawer,
-} from 'taro-ui'
-import DocsHeader from '../components/doc-header'
-import NavigatorBtn from '../components/navigator-btn'
-import './index.scss'
+import Taro from '@tarojs/taro';
+import { View } from '@tarojs/components';
+import { AtNavBar, AtTabBar, AtTabs, AtTabsPane, AtSegmentedControl, AtPagination, AtDrawer } from 'taro-ui';
+import DocsHeader from '../components/doc-header';
+import NavigatorBtn from '../components/navigator-btn';
+import './index.scss';
 
 export default class NavigationPage extends Taro.Component {
   config = {
     navigationBarTitleText: 'Taro UI'
-  }
+  };
 
-  constructor () {
-    super(...arguments)
+  constructor() {
+    super(...arguments);
     this.state = {
       tabbarCurrent: 0,
       tabsListValue: 0,
       tabsListValue2: 0,
       segmentedValue: 0,
-      leftDrawerShow: false,
-    }
+      leftDrawerShow: false
+    };
   }
 
-  leftDrawerClick () {
+  leftDrawerClick() {
     this.setState({
-      leftDrawerShow: !this.state.leftDrawerShow,
-    })
+      leftDrawerShow: !this.state.leftDrawerShow
+    });
   }
 
-  onDrawerClose () {
+  onDrawerClose() {
     this.setState({
-      leftDrawerShow: !this.state.leftDrawerShow,
-    })
+      leftDrawerShow: !this.state.leftDrawerShow
+    });
   }
 
-  handleTabBarClick (value) {
+  handleTabBarClick(value) {
     this.setState({
       tabbarCurrent: value
-    })
+    });
   }
 
-  handleTabsClick (stateName, value) {
+  handleTabsClick(stateName, value) {
     this.setState({
       [stateName]: value
-    })
+    });
   }
 
-  handleSegmenentedClick (value) {
+  handleSegmenentedClick(value) {
     this.setState({
       segmentedValue: value
-    })
+    });
   }
 
-  render () {
-    const { tabsListValue, tabsListValue2, segmentedValue } = this.state
-    const tabbarList = [{ title: '待办事项', iconType: 'bullet-list', text: 'new' }, { title: '拍照', iconType: 'camera' }, { title: '文件夹', iconType: 'folder', text: '100', max: '99' }]
+  render() {
+    const { tabsListValue, tabsListValue2, segmentedValue } = this.state;
+    const tabbarList = [
+      { title: '待办事项', iconType: 'bullet-list', text: 'new' },
+      { title: '拍照', iconType: 'camera' },
+      { title: '文件夹', iconType: 'folder', text: '100', max: '99' }
+    ];
     const tabList = [
       { title: '标签页1' },
       { title: '标签页2' },
@@ -69,13 +65,13 @@ export default class NavigationPage extends Taro.Component {
       { title: '标签页4' },
       { title: '标签页5' },
       { title: '标签页6' }
-    ]
-    const segmentedList = ['标签页1', '标签页2', '标签页3']
+    ];
+    const segmentedList = ['标签页1', '标签页2', '标签页3'];
 
     return (
       <View className='page'>
         {/* S Header */}
-        <DocsHeader title='导航' desc='7 个组件'></DocsHeader>
+        <DocsHeader title='导航' desc='7 个组件' />
         {/* E Header */}
 
         {/* S Body */}
@@ -85,12 +81,7 @@ export default class NavigationPage extends Taro.Component {
             <View className='panel__title'>NavBar 导航栏</View>
             <View className='panel__content no-padding'>
               <View className='example-item'>
-                <AtNavBar
-                  title='NavBar 导航栏示例'
-                  leftIconType='chevron-left'
-                  rightFirstIconType='bullet-list'
-                  rightSecondIconType='user'
-                />
+                <AtNavBar title='NavBar 导航栏示例' leftIconType='chevron-left' rightFirstIconType='bullet-list' rightSecondIconType='user' />
               </View>
             </View>
           </View>
@@ -135,7 +126,14 @@ export default class NavigationPage extends Taro.Component {
 
               <View className='example-item'>
                 <View className='example-item__desc'>垂直标签页</View>
-                <AtTabs height='200px' scroll tabDirection='vertical' current={tabsListValue2} tabList={tabList} onClick={this.handleTabsClick.bind(this, 'tabsListValue2')}>
+                <AtTabs
+                  height='200px'
+                  scroll
+                  tabDirection='vertical'
+                  current={tabsListValue2}
+                  tabList={tabList}
+                  onClick={this.handleTabsClick.bind(this, 'tabsListValue2')}
+                >
                   <AtTabsPane tabDirection='vertical' current={tabsListValue2} index={0}>
                     <View className='tab-content--vertical'>标签页一的内容</View>
                   </AtTabsPane>
@@ -176,12 +174,12 @@ export default class NavigationPage extends Taro.Component {
             <View className='panel__content no-padding'>
               <View className='example-item'>
                 <View className='example-item__desc'>基础</View>
-                <AtPagination total={50} pageSize={10} current={1}></AtPagination>
+                <AtPagination total={50} pageSize={10} current={1} />
               </View>
 
               <View className='example-item'>
                 <View className='example-item__desc'>图标</View>
-                <AtPagination icon total={50} pageSize={10} current={1}></AtPagination>
+                <AtPagination icon total={50} pageSize={10} current={1} />
               </View>
             </View>
           </View>
@@ -191,9 +189,10 @@ export default class NavigationPage extends Taro.Component {
             <View className='panel__title'>Drawer 抽屉</View>
             <View className='panel__content'>
               <View className='example-item'>
-                <View className='demo-btn' onClick={this.leftDrawerClick.bind(this)}>左边滑出</View>
-                <AtDrawer show={this.state.leftDrawerShow} mask onClose={this.onDrawerClose.bind(this)} items={['菜单1', '菜单2']}>
-                </AtDrawer>
+                <View className='demo-btn' onClick={this.leftDrawerClick.bind(this)}>
+                  左边滑出
+                </View>
+                <AtDrawer show={this.state.leftDrawerShow} mask onClose={this.onDrawerClose.bind(this)} items={['菜单1', '菜单2']} />
               </View>
             </View>
           </View>
@@ -203,14 +202,13 @@ export default class NavigationPage extends Taro.Component {
             <View className='panel__title'>Indexes 索引选择器</View>
             <View className='panel__content'>
               <View className='example-item'>
-                <NavigatorBtn parent='navigation' name='indexes'></NavigatorBtn>
+                <NavigatorBtn parent='navigation' name='indexes' />
               </View>
             </View>
           </View>
-
         </View>
         {/* E Body */}
       </View>
-    )
+    );
   }
 }
