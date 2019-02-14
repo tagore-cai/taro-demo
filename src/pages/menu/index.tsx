@@ -48,6 +48,11 @@ class Index extends Taro.Component {
         // url: `/pages/panel/index?id=${id.toLowerCase()}`
         url: `/pages/menu/index?uid=${i.uid}`
       });
+    } else {
+      Taro.navigateTo({
+        // url: `/pages/panel/index?id=${id.toLowerCase()}`
+        url: `/pages${i.uid}/index?uid=${i.uid}`
+      });
     }
   }
 
@@ -57,14 +62,11 @@ class Index extends Taro.Component {
 
   render() {
     const { uid } = this.$router.params;
+    const currMenu = this.props.mapMenus && this.props.mapMenus[uid];
     const menus = this.props.mapMenus ? this.props.mapMenus[uid].children : [];
     return (
       <View className='page page-index'>
-        <View className='panel'>
-          <View className='panel__content no-padding'>
-            <AtNavBar title='商品中台首页' onClickLeftIcon={this.onClickLeftIcon} leftIconType='chevron-left' rightFirstIconType='user' />
-          </View>
-        </View>
+        <AtNavBar fixed title={currMenu.name} onClickLeftIcon={this.onClickLeftIcon} leftIconType='chevron-left' rightFirstIconType='user' />
         <View className='module-container'>
           <View className='module-list'>
             {menus.map(item => (

@@ -1,0 +1,11 @@
+@import '../../../assets/css/theme.scss';
+
+.page {
+  position: relative;
+  background-color: #fdfdfd;
+
+  view,
+  div {
+    box-sizing: border-box;
+  }
+}

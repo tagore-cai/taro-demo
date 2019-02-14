@@ -32,6 +32,7 @@ class App extends Component {
       'pages/index/index',
       'pages/login/index',
       'pages/menu/index',
+      'pages/materials/material/index',
       'pages/basic/index',
       'pages/view/index',
       'pages/view/article/index',
