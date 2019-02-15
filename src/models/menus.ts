@@ -1,12 +1,5 @@
-import Taro from '@tarojs/taro';
 // model文件模版
 import * as Api from '../service/base';
-
-const INITIAL_STATE = {
-  tree: [],
-  menus: [],
-  mapMenus: {}
-};
 
 /**
  * 返回重构路由数据
@@ -46,12 +39,11 @@ export function genMenu(sourceMenus: Array<any> = [], menus: Array<any> = [], fa
   return menus;
 }
 
-export function genMapMenu(uid: string, menus: Array<any> = [], mapMenus = {}) {
-  const len = menus.length;
-  for (let i = 0; i < len; i++) {
-    mapMenus[menus[i].uid] = menus[i];
-    genMapMenu(uid, menus[i].children, mapMenus);
-  }
+export function genMapMenu(menus: Array<any> = [], mapMenus = {}) {
+  menus.forEach(item => {
+    mapMenus[item.uid] = item;
+    genMapMenu(item.children, mapMenus);
+  });
   return mapMenus;
 }
 
@@ -60,14 +52,14 @@ export default {
   state: {
     tree: [],
     menus: [],
-    curr: []
+    mapMenus: []
   },
 
   effects: {
     *getMenuTree({ payload }, { call, put }) {
       const res = yield call(Api.getMenuTree, payload);
       const menus = genMenu(res);
-      const mapMenus = genMapMenu('/item/mryx/itemList', menus);
+      const mapMenus = genMapMenu(menus);
       yield put({
         type: 'save',
         payload: { tree: res, menus, mapMenus }
@@ -76,7 +68,7 @@ export default {
   },
 
   reducers: {
-    save(state = INITIAL_STATE, { payload }) {
+    save(state, { payload }) {
       return { ...state, ...payload };
     }
   }

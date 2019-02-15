@@ -85,8 +85,8 @@ class Index extends Taro.Component {
     const { menus } = this.props;
     return (
       <View className='page page-index'>
-        <AtNavBar fixed onClickLeftIcon={this.leftDrawerClick} title='商品中台首页' leftIconType='bullet-list' rightFirstIconType='user' />
-        <View className='logo-content'>
+        <AtNavBar onClickLeftIcon={this.leftDrawerClick} title='商品中台首页' leftIconType='bullet-list' rightFirstIconType='user' />
+        <View className='page-container page-content'>
           <View className='logo'>
             <Image src={logoImg} className='img' mode='widthFix' />
           </View>

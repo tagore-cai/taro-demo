@@ -1,51 +1,24 @@
 @import '../../assets/css/theme.scss';
 
-.page {
-  position: relative;
-  background-color: #fdfdfd;
-
-  view,
-  div {
-    box-sizing: border-box;
-  }
-}
-
 .page-index {
-  .logo {
-    margin: 0 auto;
-    margin-top: 60px;
-    font-size: 0;
-    text-align: center;
-
-    .img {
-      width: 144px;
-      height: 144px;
-    }
-  }
-
-  .page-title {
-    margin-top: 24px;
-    color: #474747;
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .logo-content {
+  .page-content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    flex: 1;
+
+    .logo {
+      margin: 0 auto;
+      margin-top: 60px;
+      font-size: 0;
+      text-align: center;
+
+      .img {
+        width: 144px;
+        height: 144px;
+      }
+    }
   }
-}
-
-.page-body {
-  padding: 40px;
-}
-
-.component-group {
-  font-size: 32px;
 }
 
 .menus {

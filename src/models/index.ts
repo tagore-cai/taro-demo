@@ -1,5 +1,5 @@
 import user from './user';
-import counter from './counter';
 import menus from './menus';
+import material from './material';
 
-export default [user, counter, menus];
+export default [menus, user, material];

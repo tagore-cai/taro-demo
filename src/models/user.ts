@@ -20,9 +20,14 @@ export default {
     *login({ payload }, { call, put }) {
       const { appList, token, oauthUser } = yield call(Api.login, payload);
       Taro.setStorage({
-        key: 'token',
-        data: token
+        key: 'user',
+        data: {
+          appList,
+          token,
+          oauthUser
+        }
       });
+      yield put({ type: 'menus/getMenuTree' });
       yield put({
         type: 'save',
         payload: {
@@ -34,21 +39,17 @@ export default {
     },
 
     *getToken(_, { put }) {
-      const token = Taro.getStorageSync('token');
-      yield put({ type: 'saveToken', payload: { token } });
+      const payload = Taro.getStorageSync('user');
+      yield put({ type: 'save', payload });
+      if (payload) {
+        yield put({ type: 'menus/getMenuTree' });
+      }
     }
   },
 
   reducers: {
     save(state = INITIAL_STATE, { payload }) {
       return { ...state, ...payload };
-    },
-
-    saveToken(state = { token: '' }, { payload }) {
-      return {
-        ...state,
-        ...payload
-      };
     }
   }
 };

@@ -11,7 +11,7 @@ service.interceptors.request.use(
   config => {
     config.header = {
       'Content-Type': 'application/json;charset=UTF-8',
-      accessToken: Taro.getStorageSync('token')
+      accessToken: Taro.getStorageSync('user').token
     };
     return config;
   },

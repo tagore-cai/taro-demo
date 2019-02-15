@@ -66,8 +66,8 @@ class Index extends Taro.Component {
     const menus = this.props.mapMenus ? this.props.mapMenus[uid].children : [];
     return (
       <View className='page page-index'>
-        <AtNavBar fixed title={currMenu.name} onClickLeftIcon={this.onClickLeftIcon} leftIconType='chevron-left' rightFirstIconType='user' />
-        <View className='module-container'>
+        <AtNavBar title={currMenu.name} onClickLeftIcon={this.onClickLeftIcon} leftIconType='chevron-left' rightFirstIconType='user' />
+        <View className='page-container'>
           <View className='module-list'>
             {menus.map(item => (
               <View
