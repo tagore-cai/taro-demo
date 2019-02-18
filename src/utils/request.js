@@ -24,6 +24,8 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
+    console.log(response);
+
     const res = response.data;
     if (+res.code !== 0) {
       Taro.showToast({
