@@ -34,6 +34,11 @@ class Index extends Taro.Component {
   constructor() {
     super(...arguments);
   }
+
+  static options = {
+    addGlobalClass: true
+  };
+
   onShareAppMessage() {
     return {
       title: 'Taro UI',
@@ -46,12 +51,12 @@ class Index extends Taro.Component {
     if (i.children.length > 0) {
       Taro.navigateTo({
         // url: `/pages/panel/index?id=${id.toLowerCase()}`
-        url: `/pages/menu/index?uid=${i.uid}`
+        url: `/pages/menu/index?uid=${i.uid}&name=${i.name}`
       });
     } else {
       Taro.navigateTo({
         // url: `/pages/panel/index?id=${id.toLowerCase()}`
-        url: `/pages${i.uid}/index?uid=${i.uid}`
+        url: `/pages${i.uid}/index?uid=${i.uid}&name=${i.name}`
       });
     }
   }
@@ -61,12 +66,12 @@ class Index extends Taro.Component {
   };
 
   render() {
-    const { uid } = this.$router.params;
+    const { uid, name } = this.$router.params;
     const currMenu = this.props.mapMenus && this.props.mapMenus[uid];
-    const menus = this.props.mapMenus ? this.props.mapMenus[uid].children : [];
+    const menus = currMenu ? currMenu.children : [];
     return (
       <View className='page page-index'>
-        <AtNavBar title={currMenu.name} onClickLeftIcon={this.onClickLeftIcon} leftIconType='chevron-left' rightFirstIconType='user' />
+        <AtNavBar title={name} onClickLeftIcon={this.onClickLeftIcon} leftIconType='chevron-left' rightFirstIconType='user' />
         <View className='page-container'>
           <View className='module-list'>
             {menus.map(item => (

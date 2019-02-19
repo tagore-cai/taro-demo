@@ -1,6 +1,6 @@
-import Request from './request';
-
 import InterceptorManager from './InterceptorManager';
+import mergeConfig from './mergeConfig';
+import Request from './request';
 import Queue from './queue';
 
 export default class Ws {
@@ -19,7 +19,7 @@ export default class Ws {
   put: (url: string, data?: Object, config?: Object) => Promise<any>;
   patch: (url: string, data?: Object, config?: Object) => Promise<any>;
 
-  constructor(instanceConfig) {
+  constructor(instanceConfig = {}) {
     this.defaults = instanceConfig;
     this.interceptors = {
       request: new InterceptorManager(),
@@ -58,10 +58,10 @@ export default class Ws {
     } else {
       config = config || {};
     }
-
+    config = mergeConfig(this.defaults, config);
     config.method = config.method ? config.method.toLowerCase() : 'get';
 
-    const chain = [this.queue.request.bind(this.queue), undefined];
+    const chain = [this.queue.put.bind(this.queue), undefined];
 
     let promise = Promise.resolve(config);
 
@@ -76,6 +76,7 @@ export default class Ws {
     while (chain.length) {
       promise = promise.then(chain.shift(), chain.shift());
     }
+
     return promise;
   }
 }

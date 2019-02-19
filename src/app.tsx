@@ -28,21 +28,7 @@ class App extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    pages: [
-      'pages/index/index',
-      'pages/login/index',
-      'pages/menu/index',
-      'pages/materials/material/index',
-      'pages/basic/index',
-      'pages/view/index',
-      'pages/view/article/index',
-      'pages/feedback/index',
-      'pages/data-entry/index',
-      'pages/layout/index',
-      'pages/navigation/index',
-      'pages/navigation/indexes/index',
-      'pages/advanced/index'
-    ],
+    pages: ['pages/index/index', 'pages/menu/index', 'pages/materials/material/index', '/pages/item/mryx/productsList/index'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
@@ -50,12 +36,6 @@ class App extends Component {
       navigationBarTextStyle: 'black'
     }
   };
-
-  componentDidShow() {
-    store.dispatch({
-      type: 'user/getToken'
-    });
-  }
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数

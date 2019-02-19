@@ -20,10 +20,7 @@ const defaultConfig = {
   xfwd: true
 };
 
-module.exports = function prepareProxy(proxy, appPublicFolder="public") {
-  // `proxy` lets you specify alternate servers for specific requests.
-  // It can either be a string or an object conforming to the Webpack dev server proxy configuration
-  // https://webpack.github.io/docs/webpack-dev-server.html
+module.exports = function prepareProxy(proxy, appPublicFolder = 'public') {
   if (!proxy) {
     return undefined;
   }
@@ -84,7 +81,6 @@ module.exports = function prepareProxy(proxy, appPublicFolder="public") {
     };
   }
 
-  // Support proxy as a string for those who are using the simple proxy option
   if (typeof proxy === 'string') {
     if (!/^http(s)?:\/\//.test(proxy)) {
       console.log(chalk.red('When "proxy" is specified in package.json it must start with either http:// or https://'));
@@ -94,7 +90,6 @@ module.exports = function prepareProxy(proxy, appPublicFolder="public") {
     return [Object.assign({}, defaultConfig, createProxyEntry(proxy))];
   }
 
-  // Otherwise, proxy is an object so create an array of proxies to pass to webpackDevServer
   return Object.keys(proxy).map(context => {
     const config = proxy[context];
     if (!config.hasOwnProperty('target')) {
@@ -114,20 +109,8 @@ function resolveLoopback(proxy) {
   if (o.hostname !== 'localhost') {
     return proxy;
   }
-  // Unfortunately, many languages (unlike node) do not yet support IPv6.
-  // This means even though localhost resolves to ::1, the application
-  // must fall back to IPv4 (on 127.0.0.1).
-  // We can re-enable this in a few years.
-  /* try {
-    o.hostname = address.ipv6() ? '::1' : '127.0.0.1';
-  } catch (_ignored) {
-    o.hostname = '127.0.0.1';
-  }*/
 
   try {
-    // Check if we're on a network; if we are, chances are we can resolve
-    // localhost. Otherwise, we can just be safe and assume localhost is
-    // IPv4 for maximum compatibility.
     if (!address.ip()) {
       o.hostname = '127.0.0.1';
     }
@@ -137,8 +120,6 @@ function resolveLoopback(proxy) {
   return url.format(o);
 }
 
-// We need to provide a custom onError function for httpProxyMiddleware.
-// It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
   return (err, req, res) => {
     const host = req.headers && req.headers.host;
@@ -147,9 +128,6 @@ function onProxyError(proxy) {
     );
     console.log('See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' + chalk.cyan(err.code) + ').');
     console.log();
-
-    // And immediately send the proper error response to the client.
-    // Otherwise, the request will eventually timeout with ERR_EMPTY_RESPONSE on the client side.
     if (res.writeHead && !res.headersSent) {
       res.writeHead(500);
     }

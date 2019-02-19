@@ -42,6 +42,11 @@ class Index extends Taro.Component {
       password: ''
     };
   }
+
+  static options = {
+    addGlobalClass: true
+  }
+
   handleAccountChange = value => {
     this.setState({
       account: value

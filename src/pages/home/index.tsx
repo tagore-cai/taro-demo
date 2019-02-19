@@ -52,12 +52,12 @@ class Index extends Taro.Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { dispatch } = this.props;
-  //   dispatch({
-  //     type: 'menus/getMenuTree'
-  //   });
-  // }
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menus/getMenuTree'
+    });
+  }
 
   leftDrawerClick = () => {
     this.setState({
@@ -74,7 +74,7 @@ class Index extends Taro.Component {
   onClickItem(i) {
     Taro.navigateTo({
       // url: `/pages/panel/index?id=${id.toLowerCase()}`
-      url: `/pages/menu/index?uid=${i.uid}`
+      url: `/pages/menu/index?uid=${i.uid}&name=${i.name}`
     });
     this.setState({
       leftDrawerShow: false

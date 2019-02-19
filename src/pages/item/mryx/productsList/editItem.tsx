@@ -1,15 +1,15 @@
 import Taro from '@tarojs/taro';
 import { ComponentClass } from 'react';
-import { View, ScrollView } from '@tarojs/components';
+import { View, ScrollView, Text, Button } from '@tarojs/components';
 import { Dispatch } from 'redux';
 import { connect } from '@tarojs/redux';
-import Header from '../../../components/header';
 
-import { parseTime } from '../../../utils';
+import { parseTime } from '../../../../utils';
 
-import { AtNavBar, AtList, AtListItem, AtFloatLayout } from 'taro-ui';
+import { AtList, AtListItem, AtFloatLayout } from 'taro-ui';
+import Header from '../../../../components/header';
 
-import './index.scss';
+import './editItem.scss';
 
 type PageStateProps = {
   list: Array<any>;
@@ -35,9 +35,9 @@ interface Index {
   props: IProps;
   state: PageState;
 }
-@connect(({ material }) => ({
-  list: material.addressList,
-  pageNo: material.pageNo
+@connect(({ listMryxItem }) => ({
+  list: listMryxItem.lists,
+  pageNo: listMryxItem.pageNo
 }))
 class Index extends Taro.Component {
   constructor() {
@@ -64,7 +64,7 @@ class Index extends Taro.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'material/getAddressList',
+      type: 'listMryxItem/getLists',
       payload: {
         pageSize: 20
       }
@@ -94,6 +94,13 @@ class Index extends Taro.Component {
     });
   }
 
+  handleItemEdit(i) {
+    this.setState({
+      open: true,
+      currItem: i
+    });
+  }
+
   handleClose = () => {
     this.setState({
       open: false
@@ -103,7 +110,7 @@ class Index extends Taro.Component {
   onScrollToLower = () => {
     const { dispatch, pageNo } = this.props;
     dispatch({
-      type: 'material/nextAddressList',
+      type: 'listMryxItem/nextLists',
       payload: {
         pageNo,
         pageSize: 20
@@ -122,20 +129,17 @@ class Index extends Taro.Component {
           </View>
         </View>
         <ScrollView scrollY onScrollToLower={this.onScrollToLower} className='page-scroll'>
-          <AtList>
-            {list.map(i => (
-              <AtListItem
-                key={i.id}
-                onClick={this.handleItemClick.bind(this, i)}
-                arrow='right'
-                title={i.areaName}
-                note={i.countryName}
-                extraText='详细信息'
-              />
-            ))}
-          </AtList>
+          {list.map(i => (
+            <View className='at-row line scroll-item'>
+              <Text className='at-col at-col-11'>{i.itemName}</Text>
+              <View className='at-col at-col-1'>
+                <View onClick={this.handleItemClick.bind(this, i)}>详情</View>
+                <View onClick={this.handleItemEdit.bind(this, i)}>编辑</View>
+              </View>
+            </View>
+          ))}
         </ScrollView>
-        <AtFloatLayout isOpened={open} scrollY title='这是个标题' onClose={this.handleClose}>
+        <AtFloatLayout isOpened={open} scrollY title='详细信息' onClose={this.handleClose}>
           <AtList>
             <AtListItem title='产地名称 ' extraText={currItem.areaName} />
             <AtListItem title='国家' extraText={currItem.countryName} />

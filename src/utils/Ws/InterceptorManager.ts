@@ -1,5 +1,3 @@
-import { forEach } from '../index';
-
 export default class InterceptorManager {
   handlers: Array<any>;
   constructor() {
@@ -18,7 +16,7 @@ export default class InterceptorManager {
     }
   }
   forEach(fn) {
-    forEach(this.handlers, h => {
+    this.handlers.forEach(h => {
       if (h !== null) {
         fn(h);
       }

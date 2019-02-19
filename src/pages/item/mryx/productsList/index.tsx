@@ -1,13 +1,13 @@
 import Taro from '@tarojs/taro';
 import { ComponentClass } from 'react';
-import { View, ScrollView } from '@tarojs/components';
+import { View, ScrollView, Text, Button } from '@tarojs/components';
 import { Dispatch } from 'redux';
 import { connect } from '@tarojs/redux';
-import Header from '../../../components/header';
 
-import { parseTime } from '../../../utils';
+import { parseTime } from '../../../../utils';
 
-import { AtNavBar, AtList, AtListItem, AtFloatLayout } from 'taro-ui';
+import { AtList, AtListItem, AtFloatLayout } from 'taro-ui';
+import Header from '../../../../components/header';
 
 import './index.scss';
 
@@ -35,9 +35,9 @@ interface Index {
   props: IProps;
   state: PageState;
 }
-@connect(({ material }) => ({
-  list: material.addressList,
-  pageNo: material.pageNo
+@connect(({ listMryxItem }) => ({
+  list: listMryxItem.lists,
+  pageNo: listMryxItem.pageNo
 }))
 class Index extends Taro.Component {
   constructor() {
@@ -64,7 +64,7 @@ class Index extends Taro.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'material/getAddressList',
+      type: 'listMryxItem/getLists',
       payload: {
         pageSize: 20
       }
@@ -94,6 +94,13 @@ class Index extends Taro.Component {
     });
   }
 
+  handleItemEdit(i) {
+    this.setState({
+      open: true,
+      currItem: i
+    });
+  }
+
   handleClose = () => {
     this.setState({
       open: false
@@ -103,7 +110,7 @@ class Index extends Taro.Component {
   onScrollToLower = () => {
     const { dispatch, pageNo } = this.props;
     dispatch({
-      type: 'material/nextAddressList',
+      type: 'listMryxItem/nextLists',
       payload: {
         pageNo,
         pageSize: 20
@@ -114,6 +121,8 @@ class Index extends Taro.Component {
   render() {
     const { list } = this.props;
     const { currItem, open } = this.state;
+    console.log(list);
+
     return (
       <View className='page page-index'>
         <View className='panel'>
@@ -122,26 +131,33 @@ class Index extends Taro.Component {
           </View>
         </View>
         <ScrollView scrollY onScrollToLower={this.onScrollToLower} className='page-scroll'>
-          <AtList>
-            {list.map(i => (
-              <AtListItem
-                key={i.id}
-                onClick={this.handleItemClick.bind(this, i)}
-                arrow='right'
-                title={i.areaName}
-                note={i.countryName}
-                extraText='详细信息'
-              />
-            ))}
-          </AtList>
+          {list.map(i => (
+            <View className='at-row line scroll-item'>
+              <Text className='at-col at-col-11'>{i.itemName}</Text>
+              <View className='at-col at-col-1 scroll-item-ext'>
+                <View onClick={this.handleItemClick.bind(this, i)}>详情</View>
+                <View onClick={this.handleItemEdit.bind(this, i)}>编辑</View>
+              </View>
+            </View>
+          ))}
         </ScrollView>
-        <AtFloatLayout isOpened={open} scrollY title='这是个标题' onClose={this.handleClose}>
+        <AtFloatLayout isOpened={open} scrollY title='详细信息' onClose={this.handleClose}>
           <AtList>
-            <AtListItem title='产地名称 ' extraText={currItem.areaName} />
-            <AtListItem title='国家' extraText={currItem.countryName} />
-            <AtListItem title='更新时间' extraText={parseTime(currItem.createTime)} />
-            <AtListItem title='创建者' extraText={currItem.createUserStr} />
-            <AtListItem title='更新者' extraText={currItem.updateUserStr} />
+            <AtListItem title='商品id ' extraText={currItem.id} />
+            <AtListItem title='商品名称' extraText={currItem.itemName} />
+            <AtListItem title='品类' extraText={currItem.categoryName} />
+            <AtListItem title='商品状态' extraText={currItem.mryxItemInfoStatusDesc} />
+            <AtListItem title='创建人' extraText={currItem.createUserName} />
+            <AtListItem title='更新者' extraText={currItem.updateUserName} />
+            <AtListItem title='创建时间' extraText={parseTime(currItem.createTime)} />
+            <AtListItem title='更新时间' extraText={parseTime(currItem.updateTime)} />
+            <View className='at-row line scroll-item'>
+              <Text className='at-col at-col-11' />
+              <View className='at-col at-col-1 scroll-item-ext'>
+                <View>详情</View>
+                <View>编辑</View>
+              </View>
+            </View>
           </AtList>
         </AtFloatLayout>
       </View>

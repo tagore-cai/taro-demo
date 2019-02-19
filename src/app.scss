@@ -1,7 +1,7 @@
 @import './assets/css/theme.scss';
 @import '~taro-ui/dist/style/index.scss';
-@import './assets/font-awesome/font-awesome.scss';
-@import './assets/font/iconfont.scss';
+// @import './assets/font-awesome/font-awesome.scss';
+// @import './assets/font/iconfont.scss';
 
 .page {
   display: flex;
@@ -23,4 +23,25 @@
     height: 100%;
     overflow: scroll;
   }
+}
+
+.line {
+  position: relative;
+}
+
+.line::after {
+  content: '';
+  position: absolute;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  border: 0 solid #e5e5e5;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  border-bottom-width: 1px;
 }

@@ -1,0 +1,26 @@
+@import '../../../../assets/css/theme.scss';
+
+.page {
+  position: relative;
+  background-color: #fdfdfd;
+
+  view,
+  div {
+    box-sizing: border-box;
+  }
+
+  &-scroll {
+    flex: 1;
+  }
+}
+
+.scroll-item {
+  font-size: 30px;
+  padding: 0 40px;
+  line-height: 1.6;
+  align-items: center;
+
+  &-ext {
+    color: #999;
+  }
+}
