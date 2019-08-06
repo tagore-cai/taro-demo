@@ -26,16 +26,14 @@ module.exports = {
       proxy: prepareProxy(
         {
           '/api': {
-            target: 'http://item-center-web.dev9.staging.imrfresh.com',
-            // target: "http://item-center-web.beta3.staging.imrfresh.com",
-            // target: "http://172.16.156.90:18599",
+            target: '',
             pathRewrite: {
               '^/api': '/api'
             },
             logLevel: 'debug'
           },
           '/console': {
-            target: 'http://blg-web.dev9.staging.imrfresh.com',
+            target: '',
             pathRewrite: {
               '^/console': '/console'
             },
